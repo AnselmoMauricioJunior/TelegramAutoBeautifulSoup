@@ -21,6 +21,7 @@ sdist/
 var/
 wheels/
 licoes/
+meditacoes/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
