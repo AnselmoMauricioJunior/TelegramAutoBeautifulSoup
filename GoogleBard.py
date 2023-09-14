@@ -43,7 +43,6 @@ class Bard:
         response = requests.post(url_pergunta,        
         data=data,
         headers=headers)
-        print(response.status_code)
         
     def formatar_resposta(self,response):
         resp =response.text[23:]
