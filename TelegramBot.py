@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from Meditacao import Meditacao
 from Licao import Licao
+from GoogleBard import Bard
 
 load_dotenv()
 print("Obtendo token...")
@@ -47,5 +48,12 @@ def send_licao(message):
     with open(caminho_pasta+"/"+file_path, 'rb') as pdf_file:
         bot.send_document(message.chat.id, pdf_file)
 
+@bot.message_handler(commands=['bot'])
+def send_bot(message):   
+    bot.send_message(message.chat.id,"Digitando...") 
+    pergunta = message.text.replace('/bot ','')  
+    bard = Bard()  
+    resposta = bard.perguntar(pergunta)
+    bot.reply_to(message, resposta)
 
 bot.infinity_polling()
