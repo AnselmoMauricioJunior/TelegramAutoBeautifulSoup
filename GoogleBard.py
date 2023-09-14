@@ -27,7 +27,7 @@ class Bard:
         headers=headers)
         id_resposta, resposta = self.formatar_resposta(response)
         self.remover_pergunta_historico(id_resposta)
-        return resposta
+        return resposta.format(**{"escape": True})
         
     def remover_pergunta_historico(self,id_pegunta):        
         url_pergunta = self.linkAPI+'batchexecute'        
@@ -71,6 +71,7 @@ class Bard:
         
    
 
-#bard = Bard()
-#bard.perguntar('Quanto é 2+4?')
+bard = Bard()
+resposta = bard.perguntar('Quanto é 2+4?')
+print(resposta)
 
