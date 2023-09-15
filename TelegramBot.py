@@ -54,6 +54,10 @@ def send_bot(message):
     pergunta = message.text.replace('/bot ','')  
     bard = Bard()  
     resposta = bard.perguntar(pergunta)
-    bot.reply_to(message, resposta)
+    
+    if len(resposta)>4096:
+        resposta = resposta[0:4095]
+
+    bot.send_message(message.chat.id,resposta,parse_mode="Markdown")
 
 bot.infinity_polling()

@@ -27,7 +27,7 @@ class Bard:
         headers=headers)
         id_resposta, resposta = self.formatar_resposta(response)
         self.remover_pergunta_historico(id_resposta)
-        return resposta.format(**{"escape": True})
+        return resposta
         
     def remover_pergunta_historico(self,id_pegunta):        
         url_pergunta = self.linkAPI+'batchexecute'        
@@ -60,18 +60,21 @@ class Bard:
         resp = re.sub(r"\,pt-PT1(.*?)\,", ",", resp)
         resp = re.sub(r"\,pt-PT1(.*?)", "", resp)
         resp = resp.replace(', Brasil,','')
+        resp = re.sub(r"\,ptrc(.*?)\,", ",", resp)
 
         id_resposta = 'c_'+re.search(r"c_(.*?)\,", resp).group(1)
 
         id_rc = 'rc_'+re.search(r"rc_(.*?)\,", resp).group(1)+','
         resposta = re.search(r"{}(.*)".format(id_rc), resp).group(1)
-
+        resposta = resposta.replace('\\\\','\\')
+        resposta = resposta.replace("\\r","\r").replace('\\n',"\n").replace('\\u003d',"\u003d")
+        resposta = resposta.replace("**","~~").replace("*","#").replace("~~","*")
         return id_resposta,resposta
 
         
    
 
-bard = Bard()
-resposta = bard.perguntar('Quanto é 2+4?')
-print(resposta)
+#bard = Bard()
+#resposta = bard.perguntar('Gere um helloword em java')
+#print(resposta)
 
